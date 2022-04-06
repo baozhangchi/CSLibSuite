@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32317.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFUtils", "WPFUtils\WPFUtils.csproj", "{526081AE-CDB5-4975-BA74-FED4AD124383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{0FA27D2C-060A-49EA-9C37-9687E02ABFEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{526081AE-CDB5-4975-BA74-FED4AD124383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526081AE-CDB5-4975-BA74-FED4AD124383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{526081AE-CDB5-4975-BA74-FED4AD124383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{526081AE-CDB5-4975-BA74-FED4AD124383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA27D2C-060A-49EA-9C37-9687E02ABFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA27D2C-060A-49EA-9C37-9687E02ABFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA27D2C-060A-49EA-9C37-9687E02ABFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA27D2C-060A-49EA-9C37-9687E02ABFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E31C51F-C2E9-4D77-8F67-475EB4D684A9}
+	EndGlobalSection
+EndGlobal
