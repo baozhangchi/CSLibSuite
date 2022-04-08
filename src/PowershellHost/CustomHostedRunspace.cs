@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET5_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -8,6 +9,16 @@ using System.Threading.Tasks;
 
 namespace PowershellHost
 {
+    public class PSDataAddedArgs<T>
+    {
+        public T Data { get; set; }
+
+        public PSDataAddedArgs(T data)
+        {
+            Data = data;
+        }
+    }
+
     /// <summary>
     /// Contains functionality for executing PowerShell scripts.
     /// </summary>
@@ -60,7 +71,7 @@ namespace PowershellHost
         /// </summary>
         /// <param name="scriptContents">The script file contents.</param>
         /// <param name="scriptParameters">A dictionary of parameter names and parameter values.</param>
-        public async Task RunScript(string scriptContents, Dictionary<string, object> scriptParameters)
+        public async Task<PSDataCollection<PSObject>> RunScript(string scriptContents, Dictionary<string, object> scriptParameters)
         {
             if (RsPool == null)
             {
@@ -87,16 +98,13 @@ namespace PowershellHost
                 ps.Streams.Information.DataAdded += Information_DataAdded;
 
                 // execute the script and await the result.
-                PSDataCollection<PSObject> pipelineObjects = await ps.InvokeAsync().ConfigureAwait(false);
-
-                // print the resulting pipeline objects to the console.
-                Console.WriteLine("----- Pipeline Output below this point -----");
-                foreach (var item in pipelineObjects)
-                {
-                    Console.WriteLine(item.BaseObject.ToString());
-                }
+                return await ps.InvokeAsync();
             }
         }
+
+        public event EventHandler<PSDataAddedArgs<ErrorRecord>> ErrorDataAdded;
+        public event EventHandler<PSDataAddedArgs<WarningRecord>> WarningDataAdded;
+        public event EventHandler<PSDataAddedArgs<InformationRecord>> InformationDataAdded;
 
         /// <summary>
         /// Handles data-added events for the information stream.
@@ -111,7 +119,7 @@ namespace PowershellHost
             var streamObjectsReceived = sender as PSDataCollection<InformationRecord>;
             var currentStreamRecord = streamObjectsReceived[e.Index];
 
-            Console.WriteLine($"InfoStreamEvent: {currentStreamRecord.MessageData}");
+            InformationDataAdded?.Invoke(this, new PSDataAddedArgs<InformationRecord>(currentStreamRecord));
         }
 
         /// <summary>
@@ -124,7 +132,7 @@ namespace PowershellHost
             var streamObjectsReceived = sender as PSDataCollection<WarningRecord>;
             var currentStreamRecord = streamObjectsReceived[e.Index];
 
-            Console.WriteLine($"WarningStreamEvent: {currentStreamRecord.Message}");
+            WarningDataAdded?.Invoke(this, new PSDataAddedArgs<WarningRecord>(currentStreamRecord));
         }
 
         /// <summary>
@@ -141,7 +149,9 @@ namespace PowershellHost
             var streamObjectsReceived = sender as PSDataCollection<ErrorRecord>;
             var currentStreamRecord = streamObjectsReceived[e.Index];
 
-            Console.WriteLine($"ErrorStreamEvent: {currentStreamRecord.Exception}");
+            ErrorDataAdded?.Invoke(this, new PSDataAddedArgs<ErrorRecord>(currentStreamRecord));
         }
     }
 }
+
+#endif
