@@ -9,21 +9,44 @@ using System.Threading.Tasks;
 
 namespace PowershellHost
 {
-    public class PSDataAddedArgs<T>
-    {
-        public T Data { get; set; }
-
-        public PSDataAddedArgs(T data)
-        {
-            Data = data;
-        }
-    }
-
     /// <summary>
     /// Contains functionality for executing PowerShell scripts.
     /// </summary>
-    public class HostedRunspace
+    public class CustomHostedRunspace
     {
+        private static CustomHostedRunspace _instance;
+        private PowerShell _powerShell;
+        private static readonly object _lock = new object();
+
+        public static CustomHostedRunspace Default
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new CustomHostedRunspace();
+                        }
+                    }
+                }
+
+                return _instance;
+            }
+        }
+
+        private CustomHostedRunspace()
+        {
+            _powerShell = PowerShell.Create();
+
+            // subscribe to events from some of the streams
+            _powerShell.Streams.Error.DataAdded += Error_DataAdded;
+            _powerShell.Streams.Warning.DataAdded += Warning_DataAdded;
+            _powerShell.Streams.Information.DataAdded += Information_DataAdded;
+        }
+
         /// <summary>
         /// The PowerShell runspace pool.
         /// </summary>
@@ -34,7 +57,7 @@ namespace PowershellHost
         /// </summary>
         /// <param name="minRunspaces"></param>
         /// <param name="maxRunspaces"></param>
-        public void InitializeRunspaces(int minRunspaces, int maxRunspaces, string[] modulesToLoad)
+        public void InitializeRunspaces(int minRunspaces, int maxRunspaces, params string[] modulesToLoad)
         {
             // create the default session state.
             // session state can be used to set things like execution policy, language constraints, etc.
@@ -69,9 +92,9 @@ namespace PowershellHost
         /// <summary>
         /// Runs a PowerShell script with parameters and prints the resulting pipeline objects to the console output. 
         /// </summary>
-        /// <param name="scriptContents">The script file contents.</param>
+        /// <param name="command">The script file contents.</param>
         /// <param name="scriptParameters">A dictionary of parameter names and parameter values.</param>
-        public async Task<PSDataCollection<PSObject>> RunScript(string scriptContents, Dictionary<string, object> scriptParameters)
+        public async Task<PSDataCollection<PSObject>> RunCommandAsync(string command, Dictionary<string, object> scriptParameters = null)
         {
             if (RsPool == null)
             {
@@ -81,24 +104,54 @@ namespace PowershellHost
             // create a new hosted PowerShell instance using a custom runspace.
             // wrap in a using statement to ensure resources are cleaned up.
 
-            using (PowerShell ps = PowerShell.Create())
+            //using (PowerShell _powerShell = PowerShell.Create())
             {
                 // use the runspace pool.
-                ps.RunspacePool = RsPool;
+                _powerShell.RunspacePool = RsPool;
+
+                _powerShell.Commands.Clear();
 
                 // specify the script code to run.
-                ps.AddScript(scriptContents);
+                _powerShell.AddCommand(command);
 
                 // specify the parameters to pass into the script.
-                ps.AddParameters(scriptParameters);
-
-                // subscribe to events from some of the streams
-                ps.Streams.Error.DataAdded += Error_DataAdded;
-                ps.Streams.Warning.DataAdded += Warning_DataAdded;
-                ps.Streams.Information.DataAdded += Information_DataAdded;
+                if (scriptParameters != null && scriptParameters.Count > 0)
+                {
+                    _powerShell.AddParameters(scriptParameters);
+                }
 
                 // execute the script and await the result.
-                return await ps.InvokeAsync();
+                return await _powerShell.InvokeAsync();
+            }
+        }
+
+        /// <summary>
+        /// Runs a PowerShell script with parameters and prints the resulting pipeline objects to the console output. 
+        /// </summary>
+        /// <param name="scriptContents">The script file contents.</param>
+        /// <param name="scriptParameters">A dictionary of parameter names and parameter values.</param>
+        public async Task<PSDataCollection<PSObject>> RunScriptAsync(string scriptContents)
+        {
+            if (RsPool == null)
+            {
+                throw new ApplicationException("Runspace Pool must be initialized before calling RunScript().");
+            }
+
+            // create a new hosted PowerShell instance using a custom runspace.
+            // wrap in a using statement to ensure resources are cleaned up.
+
+            //using (PowerShell _powerShell = PowerShell.Create())
+            {
+                // use the runspace pool.
+                _powerShell.RunspacePool = RsPool;
+
+                _powerShell.Commands.Clear();
+
+                // specify the script code to run.
+                _powerShell.AddScript(scriptContents);
+
+                // execute the script and await the result.
+                return await _powerShell.InvokeAsync();
             }
         }
 

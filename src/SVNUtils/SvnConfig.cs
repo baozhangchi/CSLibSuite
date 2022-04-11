@@ -1,7 +1,7 @@
 ﻿using SVNUtils.Models;
+using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SVNUtils
 {
@@ -12,38 +12,41 @@ namespace SVNUtils
     {
         // ReSharper disable once InconsistentNaming
         private const string USER_PASSWORD_CONFIG_FILENAME = "htpasswd";
-        private static readonly ConfigInfo Config;
+        private const string GROUP_CONFIG_FILENAME = "groups.conf";
+        private static readonly ConfigInfo Config = new ConfigInfo();
 
         static SvnConfig()
         {
-#if NET5_0_OR_GREATER
-            Config = GetConfigAsync().Result;
-#else
             Config = GetConfig();
-#endif
+        }
+
+        /// <summary>
+        /// 设置仓库根目录
+        /// </summary>
+        /// <param name="path"></param>
+        public static void SetRepositoriesRoot(string path)
+        {
+            Config.RepositoriesRoot = path;
         }
 
         /// <summary>
         /// SVN用户名、密码配置文件地址
         /// </summary>
-        public static string UserPasswordConfigFile => Path.Combine(Config.RepositoriesRoot, USER_PASSWORD_CONFIG_FILENAME);
+        public static string UserPasswordConfigFile => string.IsNullOrWhiteSpace(Config.RepositoriesRoot) ? throw new NotImplementedException(nameof(Config.RepositoriesRoot)) : Path.Combine(Config.RepositoriesRoot, USER_PASSWORD_CONFIG_FILENAME);
+
+        /// <summary>
+        /// SVN组配置文件地址
+        /// </summary>
+        public static string GroupConfigFile => string.IsNullOrWhiteSpace(Config.RepositoriesRoot) ? throw new NotImplementedException(nameof(Config.RepositoriesRoot)) : Path.Combine(Config.RepositoriesRoot, GROUP_CONFIG_FILENAME);
 
         /// <summary>
         /// 获取SVN配置
         /// </summary>
         /// <returns><see cref="ConfigInfo"/></returns>
-#if NET5_0_OR_GREATER
-        public static async Task<ConfigInfo> GetConfigAsync()
-#else
         public static ConfigInfo GetConfig()
-#endif
         {
-            var ps = PowershellHost.SimpleHostedRunspace.Default;
-#if NET5_0_OR_GREATER
-            var result = await ps.RunScript("Get-SvnServerConfiguration");
-#else
-            var result = ps.RunScript("Get-SvnServerConfiguration");
-#endif
+            var ps = PowershellHost.CustomHostedRunspace.Default;
+            var result = ps.RunCommandAsync("Get-SvnServerConfiguration").Result;
             return result.ToList<ConfigInfo>().Single();
         }
     }

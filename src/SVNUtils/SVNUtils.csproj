@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net6.0;net452</TargetFrameworks>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
@@ -17,11 +17,4 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
 		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.6" />
 	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-		<Reference Include="System.Management.Automation">
-			<HintPath>..\lib\System.Management.Automation.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-
 </Project>

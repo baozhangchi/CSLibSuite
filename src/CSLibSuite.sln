@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowershellHost", "PowershellHost\PowershellHost.csproj", "{4B7A901F-E28E-4B41-A742-3C04A0D9EDC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SVNUtils", "SVNUtils\SVNUtils.csproj", "{86D27ADE-7652-4BAE-BC76-11314D5AB8F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SVNUtils", "SVNUtils\SVNUtils.csproj", "{86D27ADE-7652-4BAE-BC76-11314D5AB8F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stylet.Light", "Stylet.Light\Stylet.Light.csproj", "{89DCC918-DB0D-4941-AC35-EE1ED9694485}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SVNUtilsWebApi", "SVNUtilsWebApi\SVNUtilsWebApi.csproj", "{61DD026F-CEB7-487F-92AF-1AC6A289F947}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{86D27ADE-7652-4BAE-BC76-11314D5AB8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D27ADE-7652-4BAE-BC76-11314D5AB8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D27ADE-7652-4BAE-BC76-11314D5AB8F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DCC918-DB0D-4941-AC35-EE1ED9694485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DCC918-DB0D-4941-AC35-EE1ED9694485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DCC918-DB0D-4941-AC35-EE1ED9694485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DCC918-DB0D-4941-AC35-EE1ED9694485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DD026F-CEB7-487F-92AF-1AC6A289F947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DD026F-CEB7-487F-92AF-1AC6A289F947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DD026F-CEB7-487F-92AF-1AC6A289F947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DD026F-CEB7-487F-92AF-1AC6A289F947}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
