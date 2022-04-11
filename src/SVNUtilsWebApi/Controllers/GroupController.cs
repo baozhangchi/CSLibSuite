@@ -5,6 +5,9 @@ using SVNUtils.Models;
 
 namespace SVNUtilsWebApi.Controllers
 {
+    /// <summary>
+    /// 用户组相关操作
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -46,8 +49,8 @@ namespace SVNUtilsWebApi.Controllers
         /// <summary>
         /// 获取所有组成员
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">组名称</param>
+        /// <returns>成员集合</returns>
         [HttpGet("get-members")]
         public async Task<List<MemberInfo>> GetGroupMembersAsync(string name)
         {
@@ -61,9 +64,9 @@ namespace SVNUtilsWebApi.Controllers
         /// <summary>
         /// 添加组成员
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="memberId"></param>
-        /// <returns></returns>
+        /// <param name="name">组名称</param>
+        /// <param name="memberId">成员ID</param>
+        /// <returns>添加是否成功</returns>
         [HttpPost("add-member")]
         public async Task<bool> AddGroupMemberAsync(string name, string memberId)
         {
@@ -79,9 +82,9 @@ namespace SVNUtilsWebApi.Controllers
         /// <summary>
         /// 删除组成员
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="memberId"></param>
-        /// <returns></returns>
+        /// <param name="name">组名称</param>
+        /// <param name="memberId">成员ID</param>
+        /// <returns>删除是否成功</returns>
         [HttpDelete("delete-member")]
         public async Task<bool> DeleteGroupMemberAsync(string name, string memberId)
         {
@@ -98,7 +101,7 @@ namespace SVNUtilsWebApi.Controllers
         /// 获取用户组所有权限
         /// </summary>
         /// <param name="groupName">用户组名</param>
-        /// <returns></returns>
+        /// <returns>权限列表</returns>
         [HttpGet("rules")]
         public async Task<List<RuleInfo>> GetRulesAsync(string groupName)
         {
@@ -112,7 +115,7 @@ namespace SVNUtilsWebApi.Controllers
         /// <param name="memberId">成员ID</param>
         /// <param name="oldGroupName">旧组名</param>
         /// <param name="newGroupName">新组名</param>
-        /// <returns></returns>
+        /// <returns>更新是否成功</returns>
         [HttpPost("change-group")]
         public async Task<bool> ChangeGroupAsync(string memberId, string oldGroupName, string newGroupName)
         {

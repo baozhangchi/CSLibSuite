@@ -13,4 +13,10 @@
     <ProjectReference Include="..\SVNUtils\SVNUtils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="nssm.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

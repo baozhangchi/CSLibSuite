@@ -111,6 +111,8 @@ namespace PowershellHost
 
                 _powerShell.Commands.Clear();
 
+                _powerShell.Streams.ClearStreams();
+
                 // specify the script code to run.
                 _powerShell.AddCommand(command);
 

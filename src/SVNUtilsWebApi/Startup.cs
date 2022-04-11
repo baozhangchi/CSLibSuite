@@ -1,19 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SVNUtilsWebApi
 {
+#pragma warning disable CS1591
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -32,7 +27,7 @@ namespace SVNUtilsWebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SVNUtilsWebApi", Version = "v1" });
                 var currentAssembly = GetType().Assembly;
-                c.IncludeXmlComments(Path.Combine(Path.GetDirectoryName(currentAssembly.Location), $"{currentAssembly.GetName().Name}.xml"), true);
+                c.IncludeXmlComments(Path.Combine(Path.GetDirectoryName(currentAssembly.Location) ?? string.Empty, $"{currentAssembly.GetName().Name}.xml"), true);
             });
 
             InitRepository();
@@ -73,4 +68,5 @@ namespace SVNUtilsWebApi
             });
         }
     }
+#pragma warning restore CS1591
 }

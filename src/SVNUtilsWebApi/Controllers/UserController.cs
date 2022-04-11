@@ -7,13 +7,17 @@ using SVNUtils.Models;
 
 namespace SVNUtilsWebApi.Controllers
 {
+    /// <summary>
+    /// 用户操作相关
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
-    {/// <summary>
-     /// 获取所有用户
-     /// </summary>
-     /// <returns></returns>
+    {
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("list")]
         public async Task<List<MemberInfo>> GetListAsync()
         {
@@ -79,9 +83,10 @@ namespace SVNUtilsWebApi.Controllers
         public async Task<List<RuleInfo>> GetRulesAsync(string userName)
         {
             List<RuleInfo> rules = new List<RuleInfo>();
+            rules.AddRange(await SVNUtils.SvnRule.GetRulesByAccountIdAsync(userName));
             var groupConfigFile = SVNUtils.SvnConfig.GroupConfigFile;
             Regex regex = new Regex(@"(?<group>\S+)=(?<members>\S+)");
-            var content = System.IO.File.ReadAllText(groupConfigFile);
+            var content = await System.IO.File.ReadAllTextAsync(groupConfigFile);
             if (regex.IsMatch(content))
             {
                 var matches = regex.Matches(content);

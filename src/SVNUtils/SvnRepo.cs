@@ -109,6 +109,26 @@ namespace SVNUtils
         }
 
         /// <summary>
+        /// 创建版本库项目
+        /// </summary>
+        /// <param name="repository">版本库名称</param>
+        /// <param name="path">项目地址</param>
+        /// <param name="type">项目类型</param>
+        /// <returns></returns>
+        public static async Task CreateRepositoryItemIfNotExistAsync(string repository, string path, string type = "Folder")
+        {
+            var ps = CustomHostedRunspace.Default;
+            var result = await ps.RunCommandAsync("Get-SvnRepositoryItem",
+                    new Dictionary<string, object>() { { "Repository", repository }, { "Path", path } });
+            if (result.Count == 0)
+            {
+                await ps.RunCommandAsync($"New-SvnRepositoryItem",
+                      new Dictionary<string, object>()
+                          { { "Repository", repository }, { "Path", path }, { "Type", type } });
+            }
+        }
+
+        /// <summary>
         /// 删除版本库项目
         /// </summary>
         /// <param name="repository">版本库名称</param>
