@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Utils.TypeConverters
+namespace System.ComponentModel
 {
     public class EnumDescriptionTypeConverter : TypeConverter
     {

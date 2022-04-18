@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
-namespace System
+namespace System.Xml
 {
     /// <summary>
     /// 序列化
@@ -114,7 +115,13 @@ namespace System
         /// <returns>反序列化结果</returns>
         public static T ToObject<T>(this string xml, Encoding encoding = null)
         {
-            return (T)xml.ToObject(typeof(T), encoding);
+            using (var stream = new MemoryStream())
+            {
+                var buffer = (encoding ?? Encoding.UTF8).GetBytes(xml);
+                stream.Write(buffer, 0, buffer.Length);
+                stream.Position = 0;
+                return stream.ToObject<T>();
+            }
         }
 
         /// <summary>
@@ -130,6 +137,7 @@ namespace System
             {
                 var buffer = (encoding ?? Encoding.UTF8).GetBytes(xml);
                 stream.Write(buffer, 0, buffer.Length);
+                stream.Position = 0;
                 return stream.ToObject(type);
             }
         }
@@ -142,8 +150,13 @@ namespace System
         /// <returns>反序列化结果</returns>
         public static object ToObject(this Stream stream, Type type)
         {
-            XmlSerializer xz = new XmlSerializer(type);
-            return xz.Deserialize(stream);
+            //XmlSerializer xz = new XmlSerializer(type);
+            //return xz.Deserialize(stream);
+            using (var reader = XmlReader.Create(stream))
+            {
+                var formatter = new XmlSerializer(type);
+                return formatter.Deserialize(reader);
+            }
         }
 
         /// <summary>
@@ -155,7 +168,7 @@ namespace System
         public static T ToObject<T>(this Stream stream)
         {
             return (T)stream.ToObject(typeof(T));
-        } 
+        }
         #endregion
     }
 }
