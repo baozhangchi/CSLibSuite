@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SVNUtils", "SVNUtils\SVNUti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SVNUtilsWebApi", "SVNUtilsWebApi\SVNUtilsWebApi.csproj", "{61DD026F-CEB7-487F-92AF-1AC6A289F947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selenium.Handler", "Selenium.Handler\Selenium.Handler.csproj", "{11A5A8A1-A822-4F7A-A7B5-0E06793A6177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Selenium.Handler", "Selenium.Handler\Selenium.Handler.csproj", "{11A5A8A1-A822-4F7A-A7B5-0E06793A6177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsTests", "UtilsTests\UtilsTests.csproj", "{9F5F3C38-4594-4E13-B4F1-A130DCDF152D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{11A5A8A1-A822-4F7A-A7B5-0E06793A6177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A5A8A1-A822-4F7A-A7B5-0E06793A6177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A5A8A1-A822-4F7A-A7B5-0E06793A6177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F5F3C38-4594-4E13-B4F1-A130DCDF152D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F5F3C38-4594-4E13-B4F1-A130DCDF152D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F5F3C38-4594-4E13-B4F1-A130DCDF152D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F5F3C38-4594-4E13-B4F1-A130DCDF152D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

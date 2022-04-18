@@ -5,7 +5,10 @@ using System.Xml.Serialization;
 
 namespace System
 {
-    public static class Serializor
+    /// <summary>
+    /// 序列化
+    /// </summary>
+    public static class XmlSerializor
     {
         #region 序列化
         /// <summary>
@@ -68,6 +71,8 @@ namespace System
             {
                 serializer.Serialize(writer, item);
             }
+
+            ms.Position = 0;
             return ms;
         }
 
@@ -93,6 +98,8 @@ namespace System
             {
                 serializer.Serialize(writer, item);
             }
+
+            ms.Position = 0;
             return ms;
         }
         #endregion
