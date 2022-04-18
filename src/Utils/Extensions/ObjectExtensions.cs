@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+// ReSharper disable once CheckNamespace
 namespace System
 {
     public static class ObjectExtensions

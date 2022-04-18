@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
+// ReSharper disable once CheckNamespace
 namespace System
 {
     public static class EnumExtensions
@@ -14,7 +10,7 @@ namespace System
         {
             var type = @enum.GetType();
             var fieldInfo = type.GetField(@enum.ToString());
-            var attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>();
+            var attribute = fieldInfo?.GetCustomAttribute<DescriptionAttribute>();
             return attribute?.Description;
         }
     }

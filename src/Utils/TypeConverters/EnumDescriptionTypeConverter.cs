@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
+﻿using System.Globalization;
 
+// ReSharper disable once CheckNamespace
 namespace System.ComponentModel
 {
     public class EnumDescriptionTypeConverter : TypeConverter

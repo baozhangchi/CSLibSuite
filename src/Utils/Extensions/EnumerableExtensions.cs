@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Utils.Extensions
 {
@@ -42,21 +39,21 @@ namespace Utils.Extensions
 
         private class DynamicEqualityComparer<T, TK> : IEqualityComparer<T>
         {
-            private readonly Func<T, TK> selector;
+            private readonly Func<T, TK> _selector;
 
             public DynamicEqualityComparer(Func<T, TK> selector)
             {
-                this.selector = selector;
+                this._selector = selector;
             }
 
             public bool Equals(T x, T y)
             {
-                return EqualityComparer<TK>.Default.Equals(selector(x), selector(y));
+                return EqualityComparer<TK>.Default.Equals(_selector(x), _selector(y));
             }
 
             public int GetHashCode(T obj)
             {
-                return EqualityComparer<TK>.Default.GetHashCode(selector(obj));
+                return EqualityComparer<TK>.Default.GetHashCode(_selector(obj));
             }
         }
     }

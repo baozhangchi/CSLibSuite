@@ -1,15 +1,14 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
 
+// ReSharper disable once CheckNamespace
 namespace System.Xml
 {
     /// <summary>
     /// 序列化
     /// </summary>
-    public static class XmlSerializor
+    public static class XmlSerializer
     {
         #region 序列化
         /// <summary>
@@ -61,7 +60,7 @@ namespace System.Xml
         {
             MemoryStream ms = new MemoryStream();
             StreamWriter writer = new StreamWriter(ms, encoding ?? Encoding.UTF8);
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            Serialization.XmlSerializer serializer = new Serialization.XmlSerializer(typeof(T));
             if (removeDefaultNamespaces)
             {
                 XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
@@ -88,7 +87,7 @@ namespace System.Xml
         {
             MemoryStream ms = new MemoryStream();
             StreamWriter writer = new StreamWriter(ms, encoding ?? Encoding.UTF8);
-            XmlSerializer serializer = new XmlSerializer(item.GetType());
+            Serialization.XmlSerializer serializer = new Serialization.XmlSerializer(item.GetType());
             if (removeDefaultNamespaces)
             {
                 XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
@@ -145,7 +144,7 @@ namespace System.Xml
         /// <summary>
         /// 字节流反序列化为对象
         /// </summary>
-        /// <param name="stream">字节流</param
+        /// <param name="stream">字节流</param>
         /// <param name="type">目标对象类型</param>
         /// <returns>反序列化结果</returns>
         public static object ToObject(this Stream stream, Type type)
@@ -154,7 +153,7 @@ namespace System.Xml
             //return xz.Deserialize(stream);
             using (var reader = XmlReader.Create(stream))
             {
-                var formatter = new XmlSerializer(type);
+                var formatter = new Serialization.XmlSerializer(type);
                 return formatter.Deserialize(reader);
             }
         }
@@ -163,7 +162,7 @@ namespace System.Xml
         /// 字节流反序列化为对象
         /// </summary>
         /// <typeparam name="T">目标对象类型</typeparam>
-        /// <param name="stream">字节流</param
+        /// <param name="stream">字节流</param>
         /// <returns>反序列化结果</returns>
         public static T ToObject<T>(this Stream stream)
         {
