@@ -26,7 +26,7 @@ namespace WPFUtils.Helpers
             if (d is DataGrid grid)
             {
                 grid.AutoGeneratingColumn -= DataGridAutoGeneratingColumn;
-                if (e.NewValue != null && string.IsNullOrWhiteSpace((string)e.NewValue))
+                if (e.NewValue != null && (bool)e.NewValue)
                 {
                     grid.AutoGeneratingColumn += DataGridAutoGeneratingColumn;
                 }
