@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Markup;
+using System.Windows.Controls;
 
-// ReSharper disable once CheckNamespace
-namespace System.Windows.Controls
+namespace WPFUtils.Helpers
 {
     public class DataGridHelper
     {

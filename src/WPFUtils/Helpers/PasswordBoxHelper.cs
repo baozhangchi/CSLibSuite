@@ -1,5 +1,8 @@
-﻿// ReSharper disable once CheckNamespace
-namespace System.Windows.Controls
+﻿
+using System.Windows;
+using System.Windows.Controls;
+
+namespace WPFUtils.Helpers
 {
     public class PasswordBoxHelper
     {
