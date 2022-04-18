@@ -7,7 +7,7 @@ using System.Windows.Markup;
 
 namespace WPFUtils.MarkupExtensions
 {
-    public class EnumBindingSourceExtensions : MarkupExtension
+    public class EnumBindingSourceExtension : MarkupExtension
     {
         private Type _enumType;
 

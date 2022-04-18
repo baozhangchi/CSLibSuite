@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace WPFUtils.Helpers
+﻿// ReSharper disable once CheckNamespace
+namespace System.Windows.Controls
 {
     public class PasswordBoxHelper
     {

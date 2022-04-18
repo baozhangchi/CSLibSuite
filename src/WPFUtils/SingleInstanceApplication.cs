@@ -61,7 +61,7 @@ namespace System.Windows
 
         public static bool IsRunning()
         {
-            string processName = Process.GetCurrentProcess().ProcessName;
+            var processName = Process.GetCurrentProcess().ProcessName;
             return Process.GetProcessesByName(processName).Length > 1;
         }
 
