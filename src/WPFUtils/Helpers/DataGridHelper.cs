@@ -40,21 +40,20 @@ namespace WPFUtils.Helpers
 
             if (p != null)
             {
-                var found = p.GetCustomAttribute<DisplayNameAttribute>();
-                if (found != null)
+                var attribute = p.GetCustomAttribute<DisplayNameAttribute>();
+                if (attribute != null)
                 {
-                    result = found.DisplayName;
-
-                    //if (found.get() == false)
-                    //{
-                    //    e.Cancel = true;
-                    //    return;
-                    //}
-                    if (e.Column.Header != e.PropertyName)
+                    result = attribute.DisplayName;
+                    if (!e.Column.Header.Equals(e.PropertyName))
                     {
                         return;
                     }
 
+                }
+                else
+                {
+                    e.Cancel = true;
+                    return;
                 }
 
 

@@ -13,7 +13,7 @@ namespace WPFUtils.Converters
                 return new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
             }
 
-            return base.Convert(value, targetType, parameter, culture);
+            return default;
         }
     }
 }

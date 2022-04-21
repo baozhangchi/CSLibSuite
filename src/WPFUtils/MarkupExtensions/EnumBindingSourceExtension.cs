@@ -21,7 +21,7 @@ namespace WPFUtils.MarkupExtensions
                     if (value != null)
                     {
                         var enumType = Nullable.GetUnderlyingType(value) ?? value;
-                        if (enumType.IsEnum)
+                        if (!enumType.IsEnum)
                         {
                             throw new ArgumentException("必须是一个枚举类型", nameof(EnumType));
                         }
