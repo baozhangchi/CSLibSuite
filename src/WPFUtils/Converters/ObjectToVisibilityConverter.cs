@@ -6,12 +6,12 @@ namespace WPFUtils.Converters
 {
     public class ObjectToVisibilityConverter : BaseConverter<ObjectToVisibilityConverter>
     {
-        private bool invert;
+        private bool _invert;
         private static ObjectToVisibilityConverter _invertInstance;
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (invert)
+            if (_invert)
             {
                 if (value is string str)
                 {
@@ -42,7 +42,7 @@ namespace WPFUtils.Converters
                         if (_invertInstance == null)
                         {
                             _invertInstance = new ObjectToVisibilityConverter();
-                            _invertInstance.invert = true;
+                            _invertInstance._invert = true;
                         }
                     }
                 }
