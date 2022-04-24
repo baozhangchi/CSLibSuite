@@ -7,7 +7,10 @@ namespace WPFUtils.Converters
     public abstract class BaseConverter<T> : IValueConverter
         where T : BaseConverter<T>, new()
     {
+        // ReSharper disable once InconsistentNaming
         protected static T _instance;
+        // ReSharper disable once StaticMemberInGenericType
+        // ReSharper disable once InconsistentNaming
         protected static readonly object _lock = new object();
 
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)

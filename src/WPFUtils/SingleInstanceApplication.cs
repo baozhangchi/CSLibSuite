@@ -1,22 +1,25 @@
 #if NET452
 using Microsoft.VisualBasic.ApplicationServices;
+#endif
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 
+// ReSharper disable once CheckNamespace
 namespace System.Windows
 {
+#if NET452
     public abstract partial class SingleInstanceApplication : Application
     {
-        protected SingleInstanceApplication()
-        {
-            Initialize();
-        }
+        //protected SingleInstanceApplication()
+        //{
+        //    Initialize();
+        //}
 
         public virtual void Activate() { }
 
-        protected abstract void Initialize();
+        //protected abstract void Initialize();
 
         public static void Run<T>(string[] args) where T : SingleInstanceApplication, new()
         {
@@ -47,6 +50,7 @@ namespace System.Windows
             app.Activate();
         }
     }
+#endif
 
     public static class SingleInstanceManager
     {
@@ -85,4 +89,3 @@ namespace System.Windows
         }
     }
 }
-#endif
