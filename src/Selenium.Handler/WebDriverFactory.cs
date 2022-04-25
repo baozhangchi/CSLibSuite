@@ -4,6 +4,9 @@ using Selenium.Handler.Factories;
 
 namespace Selenium.Handler
 {
+    /// <summary>
+    /// WebDriver工厂类
+    /// </summary>
     public static class WebDriverFactory
     {
         /// <summary>
@@ -30,11 +33,20 @@ namespace Selenium.Handler
                     return new FirefoxWebWebDriverFactory().CreateDriver(hideCommandPromptWindow, disableGpu, headLess,
                         ignoreCertificateErrors);
 
+                default:
+                    return default;
             }
-
-            return default;
         }
 
+        /// <summary>
+        /// 生成WebDriver
+        /// </summary>
+        /// <typeparam name="T">WebDriver工厂类类型</typeparam>
+        /// <param name="hideCommandPromptWindow">隐藏黑框</param>
+        /// <param name="disableGpu">禁用GPU加速</param>
+        /// <param name="headLess">无头模式</param>
+        /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <returns></returns>
         public static WebDriver GenerateWebDriver<T>(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true)
         where T : IDriverFactory
         {
@@ -42,11 +54,10 @@ namespace Selenium.Handler
         }
     }
 
-    public interface IDriverFactory
-    {
-        WebDriver CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true);
-    }
-
+    /// <summary>
+    /// WebDriver工厂类
+    /// </summary>
+    /// <typeparam name="T">WebDriver类型</typeparam>
     public abstract class WebDriverFactory<T> : IDriverFactory<T>
         where T : WebDriver
     {
@@ -55,27 +66,29 @@ namespace Selenium.Handler
         {
         }
 
+        /// <summary>
+        /// 生成WebDriver
+        /// </summary>
+        /// <param name="hideCommandPromptWindow">隐藏黑框</param>
+        /// <param name="disableGpu">禁用GPU加速</param>
+        /// <param name="headLess">无头模式</param>
+        /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <returns></returns>
         public abstract T CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
             bool ignoreCertificateErrors = true);
 
+        /// <summary>
+        /// 生成WebDriver
+        /// </summary>
+        /// <param name="hideCommandPromptWindow">隐藏黑框</param>
+        /// <param name="disableGpu">禁用GPU加速</param>
+        /// <param name="headLess">无头模式</param>
+        /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <returns></returns>
         WebDriver IDriverFactory.CreateDriver(bool hideCommandPromptWindow, bool disableGpu, bool headLess,
             bool ignoreCertificateErrors)
         {
             return CreateDriver(hideCommandPromptWindow, disableGpu, headLess, ignoreCertificateErrors);
         }
-    }
-
-    public interface IDriverFactory<out T> : IDriverFactory
-    where T : WebDriver
-    {
-        // ReSharper disable once UnusedMemberInSuper.Global
-        new T CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true);
-    }
-
-    public enum DriverType
-    {
-        Chrome,
-        Firefox,
-        Edge
     }
 }
