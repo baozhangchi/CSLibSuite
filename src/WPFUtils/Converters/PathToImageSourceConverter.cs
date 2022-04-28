@@ -6,7 +6,7 @@ namespace WPFUtils.Converters
 {
     public class PathToImageSourceConverter : BaseConverter<PathToImageSourceConverter>
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object NormalConvert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string path)
             {
