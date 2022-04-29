@@ -36,7 +36,7 @@ namespace WPFUtils.Helpers
         private static void DataGridAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var result = e.PropertyName;
-            var p = (e.PropertyDescriptor as PropertyDescriptor).ComponentType.GetProperty(e.PropertyName);
+            var p = ((PropertyDescriptor) e.PropertyDescriptor).ComponentType.GetProperty(e.PropertyName);
 
             if (p != null)
             {

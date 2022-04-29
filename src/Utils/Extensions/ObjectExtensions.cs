@@ -35,5 +35,17 @@ namespace System
         /// <param name="length"></param>
         /// <returns></returns>
         public static bool[] ToBinaryArray(this int value, int? length = null) => value.ToBinary(length).Select(x => x == '1').ToArray();
+
+        /// <summary>
+        /// 保留n位小数，不进行四舍五入
+        /// </summary>
+        /// <param name="value">原数字</param>
+        /// <param name="digit">小数位数</param>
+        /// <returns>结果</returns>
+        public static double KeepDecimal(this double value, uint digit = 0)
+        {
+            var n = Math.Pow(10, digit);
+            return (int)(value * n) / n;
+        }
     }
 }

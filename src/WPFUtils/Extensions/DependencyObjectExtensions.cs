@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 // ReSharper disable once CheckNamespace
 namespace System.Windows
@@ -21,6 +15,30 @@ namespace System.Windows
             }
 
             return parent as T;
+        }
+
+        public static T ChildOfType<T>(this DependencyObject dependencyObject)
+            where T : DependencyObject
+        {
+            if (VisualTreeHelper.GetChildrenCount(dependencyObject) > 0)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(dependencyObject, i);
+                    if (child is T target)
+                    {
+                        return target;
+                    }
+
+                    target = child.ChildOfType<T>();
+                    if (target != null)
+                    {
+                        return target;
+                    }
+                }
+            }
+
+            return default;
         }
     }
 }
