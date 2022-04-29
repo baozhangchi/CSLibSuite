@@ -6,49 +6,24 @@ namespace WPFUtils.Converters
 {
     public class ObjectToVisibilityConverter : BaseConverter<ObjectToVisibilityConverter>
     {
-        private bool _invert;
-        private static ObjectToVisibilityConverter _invertInstance;
-
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object InvertConvert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (_invert)
+            if (value is string str)
             {
-                if (value is string str)
-                {
-                    return string.IsNullOrWhiteSpace(str) ? Visibility.Visible : Visibility.Collapsed;
-                }
-
-                return value == null ? Visibility.Visible : Visibility.Collapsed;
+                return string.IsNullOrWhiteSpace(str) ? Visibility.Visible : Visibility.Collapsed;
             }
-            else
-            {
-                if (value is string str)
-                {
-                    return string.IsNullOrWhiteSpace(str) ? Visibility.Collapsed : Visibility.Visible;
-                }
 
-                return value == null ? Visibility.Collapsed : Visibility.Visible;
-            }
+            return value == null ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public static ObjectToVisibilityConverter InvertInstance
+        protected override object NormalConvert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            get
+            if (value is string str)
             {
-                if (_invertInstance == null)
-                {
-                    lock (_lock)
-                    {
-                        if (_invertInstance == null)
-                        {
-                            _invertInstance = new ObjectToVisibilityConverter();
-                            _invertInstance._invert = true;
-                        }
-                    }
-                }
-
-                return _invertInstance;
+                return string.IsNullOrWhiteSpace(str) ? Visibility.Collapsed : Visibility.Visible;
             }
+
+            return value == null ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

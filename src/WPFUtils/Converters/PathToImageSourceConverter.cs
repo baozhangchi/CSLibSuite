@@ -6,11 +6,16 @@ namespace WPFUtils.Converters
 {
     public class PathToImageSourceConverter : BaseConverter<PathToImageSourceConverter>
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object NormalConvert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string path)
             {
                 return new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
+            }
+
+            if (value is Uri uri)
+            {
+                return new BitmapImage(uri);
             }
 
             return default;

@@ -5,19 +5,19 @@ namespace WPFUtils.Converters
 {
     public class EnumToDescriptionConverter : BaseConverter<EnumToDescriptionConverter>
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object NormalConvert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
                 return null;
             }
 
-            if(value is Enum @enum)
+            if (value is Enum @enum)
             {
                 return @enum.GetDescription();
             }
 
-            return base.Convert(value, targetType, parameter, culture);
+            return base.NormalConvert(value, targetType, parameter, culture);
         }
     }
 }
