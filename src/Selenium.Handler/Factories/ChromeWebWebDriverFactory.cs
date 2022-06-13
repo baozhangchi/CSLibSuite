@@ -8,7 +8,7 @@ namespace Selenium.Handler.Factories
     internal class ChromeWebWebDriverFactory : WebDriverFactory<ChromeDriver>
     {
         public override ChromeDriver CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
-            bool ignoreCertificateErrors = true)
+            bool ignoreCertificateErrors = true, string driverPath = null)
         {
             var options = new ChromeOptions();
             if (disableGpu)
@@ -27,7 +27,12 @@ namespace Selenium.Handler.Factories
             }
 
             var config = new ChromeConfig();
-            var driverService = ChromeDriverService.CreateDefaultService(Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion())));
+            if (string.IsNullOrWhiteSpace(driverPath) || !File.Exists(driverPath))
+            {
+                driverPath =
+                    Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion()));
+            }
+            var driverService = ChromeDriverService.CreateDefaultService(driverPath);
             driverService.HideCommandPromptWindow = hideCommandPromptWindow;
             return new ChromeDriver(driverService, options);
         }

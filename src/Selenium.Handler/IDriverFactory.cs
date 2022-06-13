@@ -16,9 +16,10 @@ namespace Selenium.Handler
         /// <param name="disableGpu">禁用GPU加速</param>
         /// <param name="headLess">无头模式</param>
         /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <param name="driverPath">驱动路径</param>
         /// <returns></returns>
         // ReSharper disable once UnusedMemberInSuper.Global
-        new T CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true);
+        new T CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true, string driverPath = null);
     }
 
     /// <summary>
@@ -33,8 +34,9 @@ namespace Selenium.Handler
         /// <param name="disableGpu">禁用GPU加速</param>
         /// <param name="headLess">无头模式</param>
         /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <param name="driverPath">驱动路径</param>
         /// <returns></returns>
         WebDriver CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
-            bool ignoreCertificateErrors = true);
+            bool ignoreCertificateErrors = true, string driverPath = null);
     }
 }

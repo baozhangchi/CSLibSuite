@@ -17,21 +17,22 @@ namespace Selenium.Handler
         /// <param name="disableGpu">禁用GPU加速</param>
         /// <param name="headLess">无头模式</param>
         /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <param name="driverPath">驱动路径</param>
         /// <returns></returns>
         // ReSharper disable once UnusedMember.Global
-        public static WebDriver CreateDriver(DriverType driverType, bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true)
+        public static WebDriver CreateDriver(DriverType driverType, bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true, bool ignoreCertificateErrors = true, string driverPath = null)
         {
             switch (driverType)
             {
                 case DriverType.Chrome:
                     return new ChromeWebWebDriverFactory().CreateDriver(hideCommandPromptWindow, disableGpu, headLess,
-                        ignoreCertificateErrors);
+                        ignoreCertificateErrors, driverPath);
                 case DriverType.Edge:
                     return new EdgeWebWebDriverFactory().CreateDriver(hideCommandPromptWindow, disableGpu, headLess,
-                        ignoreCertificateErrors);
+                        ignoreCertificateErrors, driverPath);
                 case DriverType.Firefox:
                     return new FirefoxWebWebDriverFactory().CreateDriver(hideCommandPromptWindow, disableGpu, headLess,
-                        ignoreCertificateErrors);
+                        ignoreCertificateErrors, driverPath);
 
                 default:
                     return default;
@@ -73,9 +74,10 @@ namespace Selenium.Handler
         /// <param name="disableGpu">禁用GPU加速</param>
         /// <param name="headLess">无头模式</param>
         /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <param name="driverPath">驱动路径</param>
         /// <returns></returns>
         public abstract T CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
-            bool ignoreCertificateErrors = true);
+            bool ignoreCertificateErrors = true, string driverPath = null);
 
         /// <summary>
         /// 生成WebDriver
@@ -84,11 +86,12 @@ namespace Selenium.Handler
         /// <param name="disableGpu">禁用GPU加速</param>
         /// <param name="headLess">无头模式</param>
         /// <param name="ignoreCertificateErrors">忽略证书错误</param>
+        /// <param name="driverPath">驱动路径</param>
         /// <returns></returns>
         WebDriver IDriverFactory.CreateDriver(bool hideCommandPromptWindow, bool disableGpu, bool headLess,
-            bool ignoreCertificateErrors)
+            bool ignoreCertificateErrors, string driverPath)
         {
-            return CreateDriver(hideCommandPromptWindow, disableGpu, headLess, ignoreCertificateErrors);
+            return CreateDriver(hideCommandPromptWindow, disableGpu, headLess, ignoreCertificateErrors, driverPath);
         }
     }
 }

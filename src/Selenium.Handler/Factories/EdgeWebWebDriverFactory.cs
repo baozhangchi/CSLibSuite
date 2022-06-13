@@ -8,7 +8,7 @@ namespace Selenium.Handler.Factories
     internal class EdgeWebWebDriverFactory : WebDriverFactory<EdgeDriver>
     {
         public override EdgeDriver CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
-            bool ignoreCertificateErrors = true)
+            bool ignoreCertificateErrors = true, string driverPath = null)
         {
             var options = new EdgeOptions();
             if (disableGpu)
@@ -16,7 +16,12 @@ namespace Selenium.Handler.Factories
             }
 
             var config = new EdgeConfig();
-            var driverService = EdgeDriverService.CreateDefaultService(Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion())));
+            if (string.IsNullOrWhiteSpace(driverPath) || !File.Exists(driverPath))
+            {
+                driverPath =
+                    Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion()));
+            }
+            var driverService = EdgeDriverService.CreateDefaultService(driverPath);
             driverService.HideCommandPromptWindow = hideCommandPromptWindow;
             return new EdgeDriver(driverService, options);
         }

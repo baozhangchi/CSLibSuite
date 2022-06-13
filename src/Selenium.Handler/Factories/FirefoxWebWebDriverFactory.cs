@@ -8,7 +8,7 @@ namespace Selenium.Handler.Factories
     internal class FirefoxWebWebDriverFactory : WebDriverFactory<FirefoxDriver>
     {
         public override FirefoxDriver CreateDriver(bool hideCommandPromptWindow = true, bool disableGpu = true, bool headLess = true,
-            bool ignoreCertificateErrors = true)
+            bool ignoreCertificateErrors = true, string driverPath = null)
         {
             var options = new FirefoxOptions();
             if (disableGpu)
@@ -16,7 +16,12 @@ namespace Selenium.Handler.Factories
             }
 
             var config = new FirefoxConfig();
-            var driverService = FirefoxDriverService.CreateDefaultService(Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion())));
+            if (string.IsNullOrWhiteSpace(driverPath) || !File.Exists(driverPath))
+            {
+                driverPath =
+                    Path.GetDirectoryName(new DriverManager().SetUpDriver(config, config.GetMatchingBrowserVersion()));
+            }
+            var driverService = FirefoxDriverService.CreateDefaultService(driverPath);
             driverService.HideCommandPromptWindow = hideCommandPromptWindow;
             return new FirefoxDriver(driverService, options);
         }
